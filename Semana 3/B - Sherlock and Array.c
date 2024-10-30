@@ -13,10 +13,10 @@ int main(){
             scanf("%d", &arr[j]);
         }
 
-        int point = n/2;
+        int point = n/2, somaesq = 0, somadir = 0, prt = 0;
 
         while(point > 0 && point < n-1){
-            int somaesq = 0, somadir = 0;
+            somaesq = 0, somadir = 0;
             for(int k = 0; k < point; k++){
                 somaesq += arr[k];
             }
@@ -24,14 +24,19 @@ int main(){
                 somadir += arr[k];
             }
 
-            if(somadir > somaesq) point++;
-            else if(somadir < somaesq) point--;
+            if(somadir > somaesq) point += (point/2 + 1);
+            else if(somadir < somaesq) point -= (point/2 + 1);
             else{
                 printf("YES\n");
+                prt = 1;
                 break;
             }
         }
-        if(point > 0 && point < n) continue;
+        if((somadir == 0 || somaesq == 0) && prt == 0){
+            printf("YES\n");
+            continue;
+        } 
+        if(point > 0 && point < n-1) continue;
         else printf("NO\n");
     }
 
