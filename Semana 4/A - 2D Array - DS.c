@@ -2,13 +2,12 @@
 
 int main(){
 
-    int matrix[6][6], maxsum = 0;
+    int matrix[6][6], maxsum = -63;
 
     for(int i = 0; i < 6; i++){
         for(int j = 0; j < 6; j++){
             scanf("%d", &matrix[i][j]);
         }
-        getchar();
     }
 
     for(int i = 0; i < 4; i++){
