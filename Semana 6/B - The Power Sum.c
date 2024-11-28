@@ -5,13 +5,12 @@ int acharcombinacao(int it, int x, int n, int* vetor);
 
 int main(){
 
-    int x, n, maneiras = 0, ant = 0, potencias[32];
+    int x, n, maneiras = 0, potencias[33] = {0};
     scanf("%d", &x);
     scanf("%d", &n);
 
-    for(int i = 1; ant < x; i++){
+    for(int i = 1; potencias[i-1] < x; i++){
         potencias[i] = pow(i, n);
-        ant = potencias[i];
     }
 
     maneiras = acharcombinacao(1, x, n, potencias);
