@@ -15,6 +15,7 @@ int main(){
         for(int j = 1; j <= 6; j++){
             if(i - j >= 0) dano[i] = (dano[i] + dano[i-j]) % MOD;
         }
+        printf("%d\n", dano[i]);
     }
 
     printf("%d\n", dano[n]);
