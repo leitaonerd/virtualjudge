@@ -66,12 +66,10 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
 }
 
 /*
- * Complete the 'deleteNode' function below.
+ * Complete the 'reverse' function below.
  *
  * The function is expected to return an INTEGER_SINGLY_LINKED_LIST.
- * The function accepts following parameters:
- *  1. INTEGER_SINGLY_LINKED_LIST llist
- *  2. INTEGER position
+ * The function accepts INTEGER_SINGLY_LINKED_LIST llist as parameter.
  */
 
 /*
@@ -84,60 +82,59 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
  *
  */
 
-SinglyLinkedListNode* deleteNode(SinglyLinkedListNode* llist, int position) {
-    SinglyLinkedListNode* temp = llist;
-    if(position == 0){
+SinglyLinkedListNode* reverse(SinglyLinkedListNode* llist) {
+    SinglyLinkedListNode* reverse = NULL;
+
+    while(llist != NULL){
+        SinglyLinkedListNode* aux;
+        (SinglyLinkedListNode*)malloc(sizeof(SinglyLinkedListNode));
+
+        aux = llist -> data;
+        reverse = aux;
         llist = llist -> next;
     }
-    
-    else{
-        for(int i = 0; i < position - 1 && temp -> next != NULL; i++){
-            temp = temp -> next;
-        }
-        temp -> next = temp -> next -> next;
-    }
-    
-    return llist;
 }
 
 int main()
 {
     FILE* fptr = fopen(getenv("OUTPUT_PATH"), "w");
 
-    SinglyLinkedList* llist = malloc(sizeof(SinglyLinkedList));
-    llist->head = NULL;
-    llist->tail = NULL;
+    char* tests_endptr;
+    char* tests_str = readline();
+    int tests = strtol(tests_str, &tests_endptr, 10);
 
-    char* llist_count_endptr;
-    char* llist_count_str = readline();
-    int llist_count = strtol(llist_count_str, &llist_count_endptr, 10);
+    if (tests_endptr == tests_str || *tests_endptr != '\0') { exit(EXIT_FAILURE); }
 
-    if (llist_count_endptr == llist_count_str || *llist_count_endptr != '\0') { exit(EXIT_FAILURE); }
+    for (int tests_itr = 0; tests_itr < tests; tests_itr++) {
+        SinglyLinkedList* llist = malloc(sizeof(SinglyLinkedList));
+        llist->head = NULL;
+        llist->tail = NULL;
 
-    for (int i = 0; i < llist_count; i++) {
-        char* llist_item_endptr;
-        char* llist_item_str = readline();
-        int llist_item = strtol(llist_item_str, &llist_item_endptr, 10);
+        char* llist_count_endptr;
+        char* llist_count_str = readline();
+        int llist_count = strtol(llist_count_str, &llist_count_endptr, 10);
 
-        if (llist_item_endptr == llist_item_str || *llist_item_endptr != '\0') { exit(EXIT_FAILURE); }
+        if (llist_count_endptr == llist_count_str || *llist_count_endptr != '\0') { exit(EXIT_FAILURE); }
 
-        insert_node_into_singly_linked_list(&llist, llist_item);
+        for (int i = 0; i < llist_count; i++) {
+            char* llist_item_endptr;
+            char* llist_item_str = readline();
+            int llist_item = strtol(llist_item_str, &llist_item_endptr, 10);
+
+            if (llist_item_endptr == llist_item_str || *llist_item_endptr != '\0') { exit(EXIT_FAILURE); }
+
+            insert_node_into_singly_linked_list(&llist, llist_item);
+        }
+
+        SinglyLinkedListNode* llist1 = reverse(llist->head);
+
+        char *sep = " ";
+
+        print_singly_linked_list(llist1, sep, fptr);
+        fprintf(fptr, "\n");
+
+        free_singly_linked_list(llist1);
     }
-
-    char* position_endptr;
-    char* position_str = readline();
-    int position = strtol(position_str, &position_endptr, 10);
-
-    if (position_endptr == position_str || *position_endptr != '\0') { exit(EXIT_FAILURE); }
-
-    SinglyLinkedListNode* llist1 = deleteNode(llist->head, position);
-
-    char *sep = " ";
-
-    print_singly_linked_list(llist1, sep, fptr);
-    fprintf(fptr, "\n");
-
-    free_singly_linked_list(llist1);
 
     fclose(fptr);
 
