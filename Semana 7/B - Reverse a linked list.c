@@ -83,16 +83,18 @@ void free_singly_linked_list(SinglyLinkedListNode* node) {
  */
 
 SinglyLinkedListNode* reverse(SinglyLinkedListNode* llist) {
-    SinglyLinkedListNode* reverse = NULL;
+    SinglyLinkedListNode* prev = NULL;  
+    SinglyLinkedListNode* current = llist;  
+    SinglyLinkedListNode* next = NULL;  
 
-    while(llist != NULL){
-        SinglyLinkedListNode* aux;
-        (SinglyLinkedListNode*)malloc(sizeof(SinglyLinkedListNode));
-
-        aux = llist -> data;
-        reverse = aux;
-        llist = llist -> next;
+    while (current != NULL) {
+        next = current -> next;   // Store the next node
+        current -> next = prev;   // Reverse the link
+        prev = current;         // Move prev one step forward
+        current = next;         // Move current one step forward
     }
+
+    return prev;  
 }
 
 int main()
