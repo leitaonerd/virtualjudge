@@ -29,7 +29,11 @@ int main(){
             if(atualcont > maxcont) maxcont = atualcont;
             memset(hashmap, 0, 100000* sizeof(int));
             atualcont = 0;
-            i = head;
+            int k;
+            for(k = head; k < i; k++){
+                hashmap[array[k]]++;
+                atualcont++;
+            }
         }
     }
 
