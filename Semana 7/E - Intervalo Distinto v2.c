@@ -11,16 +11,21 @@ int main() {
     }
 
     for(int i = 0; i < n; i++){
-        hashmap[array[i]]++;
-
-        while(hashmap[array[i]] > 1){
-            hashmap[array[head]]--;
-            head++;
+        if(hashmap[array[i]] == 0){
+            hashmap[array[i]]++;
+            atualcont++;
         }
+        else{
+            int j = head;
+            while(array[j] != array[i]){
+                j++;
+            }
+            head = j++;
 
-        atualcont = i - head + 1;
-        if(atualcont > maxcont){
-            maxcont = atualcont;
+            if(atualcont > maxcont) maxcont = atualcont;
+            memset(hashmap, 0, 100000* sizeof(int));
+            atualcont = 0;
+            i = head;
         }
     }
 
