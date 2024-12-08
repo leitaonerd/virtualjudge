@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 int main() {
-    int n, head = 0, atualcont = 0, maxcont = 0, hashmap[100000] = {0};
+    int n, head = 0, atualcont = 0, maxcont = 0;
     scanf("%d", &n);
 
     int array[n];
@@ -10,22 +10,21 @@ int main() {
         scanf("%d", &array[i]);
     }
 
-    for(int i = 0; i < n; i++){
-        if(hashmap[array[i]] == 0){
-            hashmap[array[i]]++;
-            atualcont++;
-        }
-        else{
-            int j = head;
-            while(array[j] != array[i]){
-                j++;
-            }
-            head = j++;
+    int hashmap[100000] = {0}; // To track occurrences of numbers.
 
-            if(atualcont > maxcont) maxcont = atualcont;
-            memset(hashmap, 0, 100000* sizeof(int));
-            atualcont = 0;
-            i = head;
+    for (int i = 0; i < n; i++) {
+        hashmap[array[i]]++;
+
+        // If the current number is already in the window, shrink the window
+        while (hashmap[array[i]] > 1) {
+            hashmap[array[head]]--;
+            head++;
+        }
+
+        // Update the length of the current unique window
+        atualcont = i - head + 1;
+        if (atualcont > maxcont) {
+            maxcont = atualcont;
         }
     }
 
