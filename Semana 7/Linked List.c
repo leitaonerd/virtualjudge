@@ -5,7 +5,6 @@ struct Elemento {
     struct Elemento* prox_elemento;
 };
 
-
 struct Elemento* novo_elemento(int dados){
     struct Elemento* temp = 
         (struct Elemento*)malloc(sizeof(struct Elemento)); 
