@@ -1,8 +1,7 @@
 #include <stdio.h>
 
 typedef struct Node{
-    int given;
-    int completion;
+    char data;
     struct Node* next;
 } Node;
 
@@ -15,6 +14,22 @@ typedef struct Fila{
 Fila* criaFila();
 
 int main(){
+
+    fila = criaFila();
+
+    Node* temp = (Node*)malloc(sizeof(Node));
+    temp -> data = 'A';
+    fila -> inicio = temp;
+    fila -> fim = temp;
+    fila -> size = 1;
+
+    for(int i = 1; i < 15; i++){
+        Node* temp = (Node*)malloc(sizeof(Node));
+        temp -> data = 'A' + i;
+        fila -> fim = temp;
+        fila -> size++;
+    }
+
 
     return 0;
 }

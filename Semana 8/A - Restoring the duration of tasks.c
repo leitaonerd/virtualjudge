@@ -21,6 +21,7 @@ int main(){
             if(given[j] > completed[j-1]) printf("%d ", (completed[j] - given[j]));
             else printf("%d ", (completed[j] - completed[j-1]));
         }
+        printf("\n");
     }
 
     return 0;

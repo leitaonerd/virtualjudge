@@ -64,7 +64,6 @@ int main(){
             fila -> fim = temp;
             fila -> tamanho++; 
         }
-        
     }
 
     printf("Esta e a fila: ");
@@ -81,7 +80,6 @@ Fila* criaFila(){
     temp -> inicio = NULL;
     temp -> fim = NULL;
     temp -> tamanho = 0;
-
     return temp;
 }
 
