@@ -5,67 +5,95 @@
 typedef struct Node{
     char data;
     struct Node* next;
+    struct Node* last;
 } Node;
 
-typedef struct Stack{
-    Node* topo;
+typedef struct List{
+    Node* start;
+    Node* end;
     int tamanho;
-} Stack;
+} List;
 
-Stack* createStack(){
-    Stack* temp = (Stack*)malloc(sizeof(Stack));
-    temp -> topo = NULL;
-    temp -> tamanho = 0;
+List* createList(){
+    List* temp = (List*)malloc(sizeof(List));
+    temp->start = NULL;
+    temp->end = NULL;
+    temp->tamanho = 0;
     return temp;
 }
 
-void pushStack(Stack* pilha, char a){
+void addList(List* lista, char a){
     Node* temp = (Node*)malloc(sizeof(Node));
-    temp -> data = a;
-    temp -> next = pilha -> topo;
-    pilha -> topo = temp;
-    pilha -> tamanho++;
-}
+    temp->data = a;
+    temp->next = NULL;
 
-int verification(Stack* temp, char a, char b){
-    if(temp -> topo == NULL) return -1;
-    if(temp -> topo -> next == NULL) return -1;
-    if(temp->topo->next->data >= a && temp->topo->next->data <= b) return -1;
-    return 0;
+    if(lista->tamanho == 0){
+        temp->last = NULL;
+        lista->start = temp;
+    } 
+    else{
+        temp->last = lista->end;
+        lista->end->next = temp;
+    }
+    lista->end = temp;
+    lista->tamanho++;
 }
 
 int main(){
     int t;
-    char string[10000];
+    char string[1000000];
     scanf("%d", &t);
 
     for(int i = 0; i < t; i++){
         scanf("%s", string);
         int len = strlen(string);
 
-        Stack* pilha = createStack();
-        for(int j = 0; j < len; j++){
-            if(string[j] != 'b' && string[j] != 'B') pushStack(pilha, string[j]);
-            else if(string[j] == 'b'){
-                Stack* temp = pilha;
-                while(verification(temp, 'a', 'z') == 0){
-                    temp -> topo = temp -> topo -> next;
-                }
-                temp->topo->next = temp->topo->next->next;
-            }
-            else if(string[j] == 'B'){
-                Stack* temp = pilha;
-                while(verification(temp, 'A', 'Z') == 0){
-                    temp -> topo = temp -> topo -> next;
-                }
-                temp->topo->next = temp->topo->next->next;
-            }
-        }
+        List* lista = createList();
 
-        while(pilha->topo != NULL){
-            printf("%c", pilha->topo->data);
-            pilha->topo = pilha->topo->next;
+        for(int j = 0; j < len; j++)
+            if(string[j] != 'b' && string[j] != 'B') addList(lista, string[j]);
+            else if(string[j] == 'b'){
+                Node* temp = lista->end;
+                while(temp != NULL){
+                    if(temp->data >= 'a' && temp->data <= 'z'){
+                        if(temp->last != NULL) temp->last->next = temp->next;
+                        else lista->start = temp->next;
+
+                        if(temp->next != NULL) temp->next->last = temp->last;
+                        else lista->end = temp->last;
+
+                        lista->tamanho--;
+                        break;
+                    }
+                    temp = temp->last;
+                }
+            } 
+            else if(string[j] == 'B'){
+                Node* temp = lista->end;
+                while(temp != NULL){
+                    if(temp->data >= 'A' && temp->data <= 'Z'){
+                        if(temp->last != NULL) temp->last->next = temp->next;
+                        else lista->start = temp->next;
+
+                        if(temp->next != NULL) temp->next->last = temp->last;
+                        else lista->end = temp->last;
+
+                        lista->tamanho--;
+                        break;
+                    }
+                    temp = temp->last;
+                }
+            }
+
+        int k = 0;
+        while(lista->start != NULL){
+            string[k] = lista->start->data;
+            lista->start = lista->start->next;
+            k++;
         }
+        string[k] = '\0';
+        printf("%s\n", string);
     }
+
     return 0;
 }
