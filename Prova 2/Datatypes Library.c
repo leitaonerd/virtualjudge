@@ -19,6 +19,10 @@ typedef struct Stack{
     Node* head;
 }Stack;
 
+int compare(const void *a, const void *b){
+    return(*(int *)a - *(int *)b);
+}
+
 Node* createNode(int data);
 void removeNode(Node* node);
 

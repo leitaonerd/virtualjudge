@@ -63,11 +63,10 @@ Stack* createStack(){
 
 int main(){
     int n, seq = 0;
-    char sequencia[100000], cortemp[31];
+    char sequencia[100000], cortemp[31], reservado[31];
 
     Stack* stackentrada = createStack();
     Stack* stacksaida = createStack();
-    Node* reservado = createNode(sequencia);
     
     scanf("%d", &n);
     for(int i = 0; i < n; i++){
@@ -98,7 +97,7 @@ int main(){
             stacksaida -> tamanho++;
         }
     }
-    for(int i = 0; i < n; i++){
+    while(stackentrada->head != NULL){
         if(strcmp(stackentrada->head->cor, stacksaida->head->cor) == 0){
             sequencia[seq] = 'M';
             seq++;
@@ -107,24 +106,43 @@ int main(){
             stacksaida -> head = stacksaida -> head -> next;
         }
         else{
-            if(strlen(reservado -> cor) > 0){
-                if(strcmp(reservado->cor, stacksaida->head->cor) == 0){
+            if(strlen(reservado) > 0){
+                if(strcmp(reservado, stacksaida->head->cor) == 0){
                     sequencia[seq] = 'R';
                     seq++;
 
-                    reservado -> cor[0] = "\0";
-                    stackentrada -> head = stackentrada -> head -> next;
+                    reservado[0] = '\0';
+                    stacksaida -> head = stacksaida -> head -> next;
                 }
                 else{
-                    ERROR
+                    printf("Defeito de fabrica!\n");
+                    return 0;
                 }
             }
             else{
-                criar reservado
+                strcpy(reservado, stackentrada->head->cor);
+                stackentrada -> head = stackentrada -> head -> next;
+                sequencia[seq] = 'G';
+                seq++;
             }
             
         }
     }
+    if(reservado[0] != '\0'){
+        if(strcmp(reservado, stacksaida->head->cor) == 0){
+            sequencia[seq] = 'R';
+            stacksaida -> head = stacksaida -> head -> next;
+        } 
+        else{
+            printf("Defeito de fabrica!\n");
+            return 0;
+        }
+    }
+    if(stacksaida -> head != NULL){
+        printf("Defeito de fabrica!\n");
+        return 0;
+    }
 
-
+    printf("%s\n", sequencia);
+    return 0;
 }
