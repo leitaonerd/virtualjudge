@@ -3,11 +3,8 @@
 #include <string.h>
 
 int n, m;
-char matriz[1000][1000];
-int visitados[1000][1000];
-
-int dx[] = {-1, 1, 0, 0};
-int dy[] = {0, 0, -1, 1};
+char matriz[1000][1001];
+int visitados[1000][1001];
 
 void search(int x, int y){
     if(x < 0 || x >= n || y < 0 || y >= m) return;
@@ -15,9 +12,10 @@ void search(int x, int y){
 
     visitados[x][y] = 1;
 
-    for(int i = 0; i < 4; i++){
-        search(x + dx[i], y + dy[i]);
-    }
+    search(x-1, y);
+    search(x+1, y);
+    search(x, y-1);
+    search(x, y+1);
 }
 
 int main() {

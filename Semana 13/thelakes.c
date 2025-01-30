@@ -6,19 +6,17 @@ int n, m;
 int matriz[1000][1000];
 int visitados[1000][1000];
 
-int dx[] = {-1, 1, 0, 0};
-int dy[] = {0, 0, -1, 1};
-
-int search(int x, int y, int total){
+int search(int x, int y){
     if(x < 0 || x >= n || y < 0 || y >= m) return 0;
-    if(matriz[x][y] == 0 || visitados[x][y] == -1) return 0;
+    if(matriz[x][y] == 0 || visitados[x][y]) return 0;
 
-    total += matriz[x][y];
-    visitados[x][y] = -1;
+    int total = matriz[x][y];
+    visitados[x][y] = 1;
 
-    for(int i = 0; i < 4; i++){
-        total += search(x + dx[i], y + dy[i], 0);
-    }
+    total += search(x-1, y);
+    total += search(x+1, y);
+    total += search(x, y-1);
+    total += search(x, y+1);
 
     return total;
 }
@@ -42,9 +40,8 @@ int main() {
 
         for(int j = 0; j < n; j++){
             for(int k = 0; k < m; k++){
-                if(matriz[j][k] != 0 && visitados[j][k] == 0){
-                    int soma = 0;
-                    int a = search(j, k, soma);
+                if(visitados[j][k] == 0 && matriz[j][k] != 0){
+                    int a = search(j, k);
                     if(a > maxdepth) maxdepth = a;
                 }
             }
