@@ -2,7 +2,7 @@
 
 int main(){
 
-    int n, d, m, ways = 0;
+    int n, d, m, maneiras = 0;
 
     scanf("%d", &n);
     int vetor[n];
@@ -18,10 +18,10 @@ int main(){
         for(int j = i; cont < m; j++, cont++){
             soma += vetor[j];
         }
-        if(soma == d) ways++;
+        if(soma == d) maneiras++;
     }
 
-    printf("%d\n", ways);
+    printf("%d\n", maneiras);
 
     return 0;
 }
